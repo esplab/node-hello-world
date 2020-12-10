@@ -9,14 +9,14 @@
 
 <body>
     <input id="myFileInput" type="file" accept="image/*" capture="environment">
-    <img id="preview" src="#" alt="your image" />
+    <img id="output" />
     <script>
         var myInput = document.getElementById('myFileInput');
         
         var reader = new FileReader();
         
         reader.onload = function (e) {
-            document.getElementById('preview').src = e.target.result;
+            document.getElementById('output').src = e.target.result;
         }
         
         function readURL(input) {
@@ -35,9 +35,17 @@
             console.log(file);
         }
 
-        myInput.addEventListener('change', sendPic, false);
-        myInput.addEventListener('change', readURL(this), false);
-        
+//         myInput.addEventListener('change', sendPic, false);
+//         myInput.addEventListener('change', readURL(this), false);
+
+    var loadFile = function(event) {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function() {
+     URL.revokeObjectURL(output.src) // free memory
+    }
+  };
+        myInput.addEventListener('change', loadFile, false);
     </script>
 </body>
 
