@@ -10,21 +10,10 @@
 <body>
     <input id="myFileInput" type="file" accept="image/*" capture="environment">
     <img id="output" style="width:100%; height:auto;" />
+
     <script>
         var myInput = document.getElementById('myFileInput');
-        
-        var reader = new FileReader();
-        
-        reader.onload = function (e) {
-            document.getElementById('output').src = e.target.result;
-        }
-        
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-    
+
         function sendPic() {
             var file = myInput.files[0];
 
@@ -35,16 +24,18 @@
             console.log(file);
         }
 
-//         myInput.addEventListener('change', sendPic, false);
-//         myInput.addEventListener('change', readURL(this), false);
+        //  myInput.addEventListener('change', sendPic, false);
 
-    var loadFile = function(event) {
-        var output = document.getElementById('output');
-        output.src = URL.createObjectURL(event.target.files[0]);
-        output.onload = function() {
-     URL.revokeObjectURL(output.src) // free memory
-    }
-  };
+        var loadFile = function (event) {
+            var output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function () {
+                URL.revokeObjectURL(output.src) // free memory
+            }
+
+            sendPic();
+        };
+
         myInput.addEventListener('change', loadFile, false);
     </script>
 </body>
