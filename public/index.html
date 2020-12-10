@@ -9,9 +9,22 @@
 
 <body>
     <input id="myFileInput" type="file" accept="image/*" capture="environment">
+    <img id="preview" src="#" alt="your image" />
     <script>
         var myInput = document.getElementById('myFileInput');
-
+        
+        var reader = new FileReader();
+        
+        reader.onload = function (e) {
+            document.getElementById('preview').src = e.target.result;
+        }
+        
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    
         function sendPic() {
             var file = myInput.files[0];
 
@@ -23,6 +36,8 @@
         }
 
         myInput.addEventListener('change', sendPic, false);
+        myInput.addEventListener('change', readURL(this), false);
+        
     </script>
 </body>
 
